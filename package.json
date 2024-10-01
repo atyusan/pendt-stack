@@ -1,7 +1,7 @@
 {
-  "name": "api",
+  "name": "pendt-template",
   "version": "0.0.0",
-  "description": "TypeScript + Prisma + MongoDB + Express API Server",
+  "description": "A backend template powered by TypeScript, Prisma, Express, Docker, and Nginx for rapid development and deployment.",
   "author": "",
   "license": "ISC",
   "scripts": {
