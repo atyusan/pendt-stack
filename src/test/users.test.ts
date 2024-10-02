@@ -1,9 +1,10 @@
 import { PrismaClient, User } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import request from 'supertest';
-import App from '@/app';
+import { App } from '@/app';
 import { CreateUserDto } from '@dtos/users.dto';
-import UserRoute from '@routes/users.route';
+import { UserRoute } from '@/routes/users.route';
+import { AuthService } from '@/services/auth.service';
 
 afterAll(async () => {
   await new Promise<void>(resolve => setTimeout(() => resolve(), 500));
@@ -13,7 +14,9 @@ describe('Testing Users', () => {
   describe('[GET] /users', () => {
     it('response findAll users', async () => {
       const usersRoute = new UserRoute();
-      const users = usersRoute.usersController.userService.users;
+      const authService = new AuthService();
+
+      const users = authService.users;
 
       users.findMany = jest.fn().mockReturnValue([
         {
@@ -43,7 +46,9 @@ describe('Testing Users', () => {
       const userId = 1;
 
       const usersRoute = new UserRoute();
-      const users = usersRoute.usersController.userService.users;
+      const authService = new AuthService();
+
+      const users = authService.users;
 
       users.findUnique = jest.fn().mockReturnValue({
         id: 1,
@@ -64,7 +69,9 @@ describe('Testing Users', () => {
       };
 
       const usersRoute = new UserRoute();
-      const users = usersRoute.usersController.userService.users;
+      const authService = new AuthService();
+
+      const users = authService.users;
 
       users.findUnique = jest.fn().mockReturnValue(null);
       users.create = jest.fn().mockReturnValue({
@@ -87,7 +94,9 @@ describe('Testing Users', () => {
       };
 
       const usersRoute = new UserRoute();
-      const users = usersRoute.usersController.userService.users;
+      const authService = new AuthService();
+
+      const users = authService.users;
 
       users.findUnique = jest.fn().mockReturnValue({
         id: userId,
@@ -114,8 +123,10 @@ describe('Testing Users', () => {
       };
 
       const usersRoute = new UserRoute();
-      const users = usersRoute.usersController.userService.users;
+      const authService = new AuthService();
 
+      const users = authService.users;
+      
       users.findUnique = jest.fn().mockReturnValue({
         id: userId,
         email: userData.email,
