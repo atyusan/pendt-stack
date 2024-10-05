@@ -66,12 +66,24 @@ fi
 # Execute the appropriate Docker Compose command
 case "$COMMAND" in
   up)
-    echo "Starting containers for $ENVIRONMENT environment..."
-    docker compose -f $BASE_COMPOSE -f $COMPOSE_FILE up -d
+    if [ "$ENVIRONMENT" == "test" ]; then
+      # For test environment, show logs in real-time (watch mode)
+      echo "Starting containers for $ENVIRONMENT environment (watch mode)..."
+      docker compose -f $BASE_COMPOSE -f $COMPOSE_FILE up
+    else
+      # For dev environment, run in detached mode
+      echo "Starting containers for $ENVIRONMENT environment..."
+      docker compose -f $BASE_COMPOSE -f $COMPOSE_FILE up -d
+    fi
     ;;
   up-build)
-    echo "Building and starting containers for $ENVIRONMENT environment..."
-    docker compose -f $BASE_COMPOSE -f $COMPOSE_FILE up --build -d
+    if [ "$ENVIRONMENT" == "test" ]; then
+      echo "Building and starting containers for $ENVIRONMENT environment (watch mode)..."
+      docker compose -f $BASE_COMPOSE -f $COMPOSE_FILE up --build
+    else
+      echo "Building and starting containers for $ENVIRONMENT environment..."
+      docker compose -f $BASE_COMPOSE -f $COMPOSE_FILE up --build -d
+    fi
     ;;
   down)
     echo "Stopping and removing containers for $ENVIRONMENT environment..."
