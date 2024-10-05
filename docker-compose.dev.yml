@@ -18,7 +18,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgres://postgres:password@postgres:5432/dev
+      DATABASE_URL: postgres://postgres:password@postgres:5432/dev_db
     volumes:
       - ./:/app
       - /app/node_modules
