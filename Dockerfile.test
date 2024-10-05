@@ -11,7 +11,7 @@ WORKDIR /app
 RUN npm install --legacy-peer-deps
 
 # Set Env
-ENV NODE_ENV development
+ENV NODE_ENV test
 
 EXPOSE 3000
 
